@@ -1,0 +1,31 @@
+syntax = "v1"
+
+info (
+	title:   "weatherapi"
+	desc:    "weatherapi"
+	author:  "yourname"
+	email:   "your@email.com"
+	version: "1.0"
+)
+
+type WeatherRequest {
+	Latitude  *float64 `form:"latitude,optional"`
+	Longitude *float64 `form:"longitude,optional"`
+	IP        string   `form:"ip,optional"`
+}
+
+type WeatherResponse {
+	Temperature float64 `json:"temperature"`
+	Description string  `json:"description"`
+	City        string  `json:"city"`
+	Icon        string  `json:"icon"` // Add icon field for weather icon
+}
+
+service weatherapi-api {
+	@doc (
+		summary: "get weather by latitude and longitude"
+	)
+	@handler GetWeather
+	get /weather (WeatherRequest) returns (WeatherResponse)
+}
+
